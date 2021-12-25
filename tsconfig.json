@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    //目标代码（ts->js(es5/6/7)）
+    "target": "esnext",
+    //目标代码需要使用的模块化方案（commonjs require/module.exports/es module import/export）
+    "module": "esnext",
+    //严格一些严格的检查（any）
+    "strict": true,
+    //对jsx进行怎样的处理
+    "jsx": "preserve",
+    //辅助的导入功能
+    "importHelpers": true,
+    //按照node的方式去解析模块 import “/index.node”
+    "moduleResolution": "node",
+    //跳过一些库的类型检测（axios->类型/lodash ->types/lodash/ 其它的第三方）
+    //import {Person} from 'axios'
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": ["webpack-env"],
+    "paths": {
+      "@/*": ["src/*"],
+      "components/*": ["src/components/*"]
+    },
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
+}
