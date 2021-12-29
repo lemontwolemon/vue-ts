@@ -5,35 +5,49 @@
       <expand v-else />
     </el-icon>
     <div class="content">
-      <div>面包屑</div>
-      <div>
-        <user-info></user-info>
-      </div>
+      <qjg-breadcrumb :breadcrumbs="breadcrumbs" />
+      <user-info />
     </div>
   </div>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
+<script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
 import { Fold, Expand } from '@element-plus/icons'
-import UserInfo from './user-info'
+import UserInfo from './user-info.vue'
+import QjgBreadcrumb from '@/base-ui/breadcrumb'
+import { pathMapBreadcrumbs } from '@/utils/map-menus'
+import { useStore } from '@/store'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'nav-header',
   components: {
     Fold,
     Expand,
-    UserInfo
+    UserInfo,
+    QjgBreadcrumb
   },
   emits: ['foldChange'],
   setup(props, { emit }) {
     const isFold = ref(false)
+
     const handleFoldClick = () => {
       isFold.value = !isFold.value
       emit('foldChange', isFold.value)
     }
+
+    const store = useStore()
+
+    const breadcrumbs = computed(() => {
+      const userMenus = store.state.login.userMenus
+      const route = useRoute()
+      const currentPath = route.path
+      return pathMapBreadcrumbs(userMenus, currentPath)
+    })
     return {
       isFold,
+      breadcrumbs,
       handleFoldClick
     }
   }
